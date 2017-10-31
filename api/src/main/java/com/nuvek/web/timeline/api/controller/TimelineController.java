@@ -29,7 +29,7 @@ public class TimelineController {
     // Get All Timeline Items
     @GetMapping("/items")
     public List<TimelineItem> getAllItems() {
-        return timelineItemRepository.findAll();
+        return timelineItemRepository.findAllByOrderByEventDateAsc();
     }
     
     // Create a new Timeline Item

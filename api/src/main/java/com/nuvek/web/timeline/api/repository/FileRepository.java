@@ -5,13 +5,11 @@
  */
 package com.nuvek.web.timeline.api.repository;
 
-import com.nuvek.web.timeline.api.model.TimelineItem;
-import java.util.List;
-import javax.persistence.EntityManager;
+import com.nuvek.web.timeline.api.model.File;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TimelineItemRepository extends JpaRepository<TimelineItem, Long> {
-    public List<TimelineItem> findAllByOrderByEventDateAsc();
+public interface FileRepository extends JpaRepository<File, Long> {
+    
 }

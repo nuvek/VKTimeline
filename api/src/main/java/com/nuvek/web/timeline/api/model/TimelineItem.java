@@ -7,6 +7,7 @@ package com.nuvek.web.timeline.api.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nuvek.web.timeline.api.util.DateSerializer;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringStack;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -17,6 +18,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name="timelineItem")
 @EntityListeners(AuditingEntityListener.class)
 public class TimelineItem implements Serializable {
+    private static final String PATH_IMAGE_DEFAULT = "/api/image/0";
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
@@ -36,7 +39,9 @@ public class TimelineItem implements Serializable {
     @Column(name="`references`")
     private String references;
     
-    public TimelineItem() {}
+    public TimelineItem() {
+        this.imagePath = PATH_IMAGE_DEFAULT;
+    }
 
     public Long getId() {
         return id;
@@ -72,11 +77,13 @@ public class TimelineItem implements Serializable {
     }
 
     public String getImagePath() {
-        return imagePath;
+        return this.imagePath == null || this.imagePath.trim().length() < 1
+                ? PATH_IMAGE_DEFAULT : this.imagePath;
     }
 
     public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+        this.imagePath = imagePath == null || imagePath.trim().length() < 1
+                ? PATH_IMAGE_DEFAULT : imagePath;
     }
 
     public String getReferences() {
